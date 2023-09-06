@@ -10,6 +10,8 @@ import mongoose from 'mongoose';
 
 import userRoutes from "./routes/userRouter"; 
 
+// const errorHandler = require('./middleware/500');
+// const notFoundHandler = require('./middleware/404');
 
 const dbURI = process.env.MONGODB;
 const PORT = process.env.PORT || 8000;
@@ -22,6 +24,10 @@ app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 
 app.use("/api", userRoutes);
+
+
+// app.use(errorHandler);
+// app.use('*',notFoundHandler);
 
 app.get("*", (req, res) => {
   fs.readFile(path.resolve("./build/index.html"), "utf-8", (err, data) => {
