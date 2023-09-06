@@ -1,4 +1,3 @@
-// 1- calling the model
 const User = require("../models/user");
 
 const errorHandler = (error, req, res) => {
@@ -6,20 +5,20 @@ const errorHandler = (error, req, res) => {
   res.status(500).json({ error: "Internal Server Error" });
 };
 
-
-
-const allUsers = (req, res) => {
-  User.find({ role: 0 })
-    .then((data) => {
-      res.json(data);
-    })
-    .catch((error) => {
-      errorHandler(error, req, res);
-    });
+const allUsers = async (req, res, next) => {
+  try {
+    const data = await User.find({ role: 0 });
+    res.json(data);
+  } catch (error) {
+    errorHandler(error, req, res);
+  }
 };
-
 
 module.exports = {
   allUsers,
-
 };
+
+
+
+
+

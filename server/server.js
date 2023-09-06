@@ -5,29 +5,41 @@ import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { StaticRouter } from "react-router-dom/server";
 import App from "../src/App";
-
 import cors from 'cors';
 import mongoose from 'mongoose';
+
+import userRoutes from "./routes/userRouter"; 
+
+
 const dbURI = process.env.MONGODB;
 const PORT = process.env.PORT || 8000;
 
-import userRoutes from "./routes/userRouter"; // Corrected the import
 
 const app = express();
 app.use(cors());
 
-app.use("^/$", (req, res) => {
+app.use(express.static(path.resolve(__dirname, "..", "build")));
+
+
+app.use("/api", userRoutes);
+
+app.get("*", (req, res) => {
   fs.readFile(path.resolve("./build/index.html"), "utf-8", (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).send("Some error happened");
     }
 
+    const context = {};
     const html = ReactDOMServer.renderToString(
-      <StaticRouter location={req.url}>
+      <StaticRouter location={req.url} context={context}>
         <App />
       </StaticRouter>
     );
+
+    if (context.url) {
+      return res.redirect(301, context.url);
+    }
 
     return res.send(
       data.replace('<div id="root"></div>', `<div id="root">${html}</div>`)
@@ -35,11 +47,9 @@ app.use("^/$", (req, res) => {
   });
 });
 
-app.use(express.static(path.resolve(__dirname, "..", "build")));
 
 
-// Define your API routes using userRoutes
-app.use(userRoutes);
+
 
 const startServer = async () => {
   try {

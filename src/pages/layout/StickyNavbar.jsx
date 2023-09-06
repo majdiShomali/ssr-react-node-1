@@ -47,7 +47,7 @@ export default function StickyNavbar() {
       >
         <HashLink
           onClick={() => setOpenNav(false)}
-          to="/#"
+          to="/Home#"
           smooth={true}
           className="flex items-center"
         >
@@ -147,7 +147,7 @@ export default function StickyNavbar() {
           <Button
             variant="text"
             color="blue-gray"
-            className="flex items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto hidden lg:flex "
+            className=" items-center gap-1 rounded-full py-0.5 pr-2 pl-0.5 lg:ml-auto hidden lg:flex "
           >
             <svg
               xmlns="https://source.unsplash.com/MP0IUfwrn0A"
@@ -208,7 +208,7 @@ export default function StickyNavbar() {
   return (
     <Navbar className="max-h-[768px] max-w-[100%] w-[100%]  px-10 sticky top-0 z-50">
       <div className="flex items-center justify-between text-blue-gray-900">
-        <Link to="/">
+        <Link to="/Home">
           <Typography className="mr-4 cursor-pointer py-1.5 font-medium">
             SSR-Test
           </Typography>

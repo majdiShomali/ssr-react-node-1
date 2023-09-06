@@ -1,8 +1,9 @@
+import { Card } from '@material-tailwind/react'
 import React from 'react'
 
 const Home = () => {
   return (
-    <div>Home</div>
+    <Card>Home</Card>
   )
 }
 
